@@ -1,0 +1,29 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: kube-doom
+  namespace: kubedoom
+  labels:
+    app: kube-doom
+spec:
+  selector:
+    matchLabels:
+      app: kube-doom
+  replicas: 1
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      labels:
+        app: kube-doom
+    spec:
+      ports:
+      hostNetwork: true
+      serviceAccountName: kubedoom
+      containers:
+       - image: storaxdev/kubedoom:0.5.0
+         name: kube-doom
+         ports:
+         - containerPort: 5900
+           protocol: TCP
+
